@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 final pages = [
   PageViewModel(
-      "Quests",
-      "Step by step guides for Zombie maps",
+      "Merry",
+      "",
       Color(0xFF678FB4),
       Icon(
         Icons.scatter_plot,
@@ -11,8 +11,8 @@ final pages = [
         size: 200,
       )),
   PageViewModel(
-      "Party Up",
-      "Group up with other people to do Quests or Challenges",
+      "Christmas",
+      "",
       Color(0xFF65B0B4),
       Icon(
         Icons.person,
@@ -20,8 +20,8 @@ final pages = [
         size: 200,
       )),
   PageViewModel(
-      "News",
-      "Stay up to date with Kronos related news",
+      "Everyone!",
+      "",
       Color(0xFF9B90BC),
       Icon(
         Icons.new_releases,
