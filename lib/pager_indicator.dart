@@ -82,24 +82,26 @@ class PageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Opacity(
-          opacity: viewModel.activePercent,
+      child: Container(height: 50,
+              child: Container(
+          child: Opacity(
+            opacity: viewModel.activePercent,
+          ),
+          width: lerpDouble(20.0, 40.0, viewModel.activePercent),
+          height: lerpDouble(20.0, 40.0, viewModel.activePercent),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: viewModel.isHollow
+                  ? const Color(0x88FFFFFF)
+                      .withAlpha(0x88 * viewModel.activePercent.round())
+                  : const Color(0x88FFFFFF),
+              border: Border.all(
+                  width: 3.0,
+                  color: viewModel.isHollow
+                      ? const Color(0x88FFFFFF)
+                          .withAlpha(0x88 * 1 - viewModel.activePercent.round())
+                      : Colors.transparent)),
         ),
-        width: lerpDouble(20.0, 40.0, viewModel.activePercent),
-        height: lerpDouble(20.0, 40.0, viewModel.activePercent),
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: viewModel.isHollow
-                ? const Color(0x88FFFFFF)
-                    .withAlpha(0x88 * viewModel.activePercent.round())
-                : const Color(0x88FFFFFF),
-            border: Border.all(
-                width: 3.0,
-                color: viewModel.isHollow
-                    ? const Color(0x88FFFFFF)
-                        .withAlpha(0x88 * 1 - viewModel.activePercent.round())
-                    : Colors.transparent)),
       ),
     );
   }

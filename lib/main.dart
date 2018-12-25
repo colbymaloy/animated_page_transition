@@ -102,13 +102,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         children: <Widget>[
           Page(
             pageViewModel: pages[activeIndex],
-            percentVisible: 1.0,
+            percentVisible: 1.0,canContinue: activeIndex >= pages.length - 1,
           ),
+          
           PageReveal(
               revealPercent: slidePercent,
+              slideDirection: slideDirection,
               child: Page(
                 pageViewModel: pages[nextPageIndex],
                 percentVisible: slidePercent,
+                canContinue: false,
               )),
           PagerIndicator(
             viewModel: PagerIndicatorViewModel(

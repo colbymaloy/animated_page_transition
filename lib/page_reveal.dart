@@ -1,30 +1,34 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:material_page_reveal/pager_indicator.dart';
 
 class PageReveal extends StatelessWidget {
   final double revealPercent;
   final Widget child;
+  final SlideDirection slideDirection;
 
-  PageReveal({this.revealPercent, this.child});
+  PageReveal({this.revealPercent, this.child, this.slideDirection});
 
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
+    return  ClipOval(
       child: child,
-      clipper: BottomOvalClipper(revealPercent),
+      clipper: BottomOvalClipper(revealPercent, slideDirection),
     );
   }
 }
 
 class BottomOvalClipper extends CustomClipper<Rect> {
   final double revealPercent;
-
-  BottomOvalClipper(this.revealPercent);
+  final SlideDirection slideDirection;
+  BottomOvalClipper(this.revealPercent, this.slideDirection);
 
   @override
   getClip(Size size) {
-    final epicenter = Offset(size.width / 2, size.height * .9);
+    final epicenter = slideDirection == SlideDirection.rightToLeft
+        ? Offset(size.width * .9, size.height / 2)
+        : Offset(size.width *.1, size.height /2);
 
     double theta = atan(epicenter.dy / epicenter.dx);
     final distanceToCorner = epicenter.dy / sin(theta);

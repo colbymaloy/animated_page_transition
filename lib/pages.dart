@@ -2,38 +2,42 @@ import 'package:flutter/material.dart';
 
 final pages = [
   PageViewModel(
-      "Merry",
-      "",
+      "Analyze",
+      "something",
       Color(0xFF678FB4),
       Icon(
         Icons.scatter_plot,
         color: Colors.white54,
         size: 200,
-      )),
+      ),
+      false),
   PageViewModel(
-      "Christmas",
-      "",
+      "Connect",
+      "with something",
       Color(0xFF65B0B4),
       Icon(
         Icons.person,
         color: Colors.white54,
         size: 200,
-      )),
+      ),
+      false),
   PageViewModel(
-      "Everyone!",
-      "",
+      "Explore",
+      "somwhere",
       Color(0xFF9B90BC),
       Icon(
-        Icons.new_releases,
+        Icons.explore,
         color: Colors.white54,
         size: 200,
-      ))
+      ),
+      true)
 ];
 
 class Page extends StatelessWidget {
   final PageViewModel pageViewModel;
   final double percentVisible;
-  Page({this.pageViewModel, this.percentVisible = 1.0});
+  final bool canContinue;
+  Page({this.pageViewModel, this.percentVisible = 1.0, this.canContinue});
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +68,30 @@ class Page extends StatelessWidget {
               transform: Matrix4.translationValues(
                   0.0, 30.0 * (1 - percentVisible), 0.0),
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 75.0),
+                padding: const EdgeInsets.only(bottom: 20.0),
                 child: Text(
                   pageViewModel.body,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
-            )
+            ),
+            canContinue
+                ? Transform(
+                    transform: Matrix4.translationValues(
+                        0.0, 30.0 * (1 - percentVisible), 0.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 75.0),
+                      child: FlatButton(
+                        shape: Border.all(),
+                        onPressed: () {},
+                        child: Text(
+                          "continue",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container()
           ],
         ),
       ),
@@ -83,6 +104,8 @@ class PageViewModel {
   final String title;
   final String body;
   final Icon pageIcon;
+  final bool canContinue;
 
-  PageViewModel(this.title, this.body, this.color, this.pageIcon);
+  PageViewModel(
+      this.title, this.body, this.color, this.pageIcon, this.canContinue);
 }
