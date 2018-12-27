@@ -37,7 +37,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   StreamController<SlideUpdate> slideUpdateStream;
 
   AnimatedPageDragger animatedPageDragger;
-
+  AnimationController _fadeAnimationController;
+  Animation _fadeAnimation;
   int activeIndex = 0;
   int nextPageIndex = 0;
 
@@ -46,7 +47,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   _MyHomePageState() {
     slideUpdateStream = StreamController<SlideUpdate>();
-
+    _fadeAnimationController = AnimationController(vsync: this,duration: Duration(milliseconds: 500));
+    _fadeAnimation = Tween(begin: 0.0,end: 1.0).animate(_fadeAnimationController);
+    
+    
     slideUpdateStream.stream.listen((event) {
       setState(() {
         if (event.updateType == UpdateType.dragging) {
@@ -59,10 +63,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             nextPageIndex = activeIndex + 1;
           } else {
             nextPageIndex = activeIndex;
+          } 
+          if(!(activeIndex < pages.length - 1)){
+            _fadeAnimationController.forward();
           }
 
           nextPageIndex.clamp(0.0, pages.length);
         } else if (event.updateType == UpdateType.doneDragging) {
+         
           if (slidePercent > .5) {
             animatedPageDragger = AnimatedPageDragger(
                 slideDirection: slideDirection,
@@ -89,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
           slideDirection = SlideDirection.none;
           slidePercent = 0.0;
+          
           animatedPageDragger.dispose();
         }
       });
@@ -102,9 +111,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         children: <Widget>[
           Page(
             pageViewModel: pages[activeIndex],
-            percentVisible: 1.0,canContinue: activeIndex >= pages.length - 1,
+            percentVisible: 1.0,
+            canContinue: activeIndex >= pages.length - 1,
           ),
-          
           PageReveal(
               revealPercent: slidePercent,
               slideDirection: slideDirection,
@@ -124,6 +133,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             canLtoR: activeIndex > 0,
             canRtoL: activeIndex < pages.length - 1,
             slideUpdateStream: slideUpdateStream,
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 75.0),
+                child: activeIndex < pages.length - 1
+                    ? Center()
+                    : RaisedButton(
+                        onPressed: () {},
+                        child: Text("Continue"),
+                      ),
+              ),
+            ),
           )
         ],
       ),

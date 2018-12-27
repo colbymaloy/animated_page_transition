@@ -50,7 +50,7 @@ class _PageDraggerState extends State<PageDragger> {
           slidePercent: slidePercent,
           updateType: UpdateType.dragging));
 
-      print("dragging screen to the $slideDirection at $slidePercent");
+     
     }
   }
 

@@ -75,7 +75,7 @@ class Page extends StatelessWidget {
                 ),
               ),
             ),
-            canContinue
+           /*  canContinue
                 ? Transform(
                     transform: Matrix4.translationValues(
                         0.0, 30.0 * (1 - percentVisible), 0.0),
@@ -91,7 +91,7 @@ class Page extends StatelessWidget {
                       ),
                     ),
                   )
-                : Container()
+                : Container() */
           ],
         ),
       ),
